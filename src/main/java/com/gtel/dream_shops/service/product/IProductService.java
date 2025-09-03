@@ -1,15 +1,17 @@
 package com.gtel.dream_shops.service.product;
 
 import com.gtel.dream_shops.model.Product;
+import com.gtel.dream_shops.request.AddProductRequest;
+import com.gtel.dream_shops.request.ProductUpdateRequest;
 
 import java.util.List;
 
 public interface IProductService {
-    Product addProduct(Product product);
+    Product addProduct(AddProductRequest request);
 
     Product getProductById(Long id);
 
-    void updateProduct(Product product, Long productId);
+    Product updateProduct(ProductUpdateRequest request, Long productId);
 
     void deleteProductById(Long id);
 
