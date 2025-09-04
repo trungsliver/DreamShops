@@ -144,4 +144,23 @@ public class ProductController {
                     .body(new ApiResponse(e.getMessage(), null));
         }
     }
+
+    @GetMapping("/product/count/by/brand-and-name")
+    public ResponseEntity<ApiResponse> countProductsByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {
+        try {
+            var count = productService.countProductsByBrandAndName(brandName, productName);
+            return ResponseEntity.ok(new ApiResponse("Product count!", count));
+        } catch (Exception e) {
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/by/category-and-branducts")
+    public ResponseEntity<List<Product>> getProductsByCategoryAndBrand(
+            @RequestParam String category,
+            @RequestParam String brand) {
+        List<Product> products = productService.getProductsByCategoryAndBrand(category, brand);
+        return ResponseEntity.ok(products);
+    }
 }
