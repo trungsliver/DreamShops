@@ -1,5 +1,6 @@
 package com.gtel.dream_shops.service.product;
 
+import com.gtel.dream_shops.dto.ProductDto;
 import com.gtel.dream_shops.model.Product;
 import com.gtel.dream_shops.request.AddProductRequest;
 import com.gtel.dream_shops.request.ProductUpdateRequest;
@@ -28,4 +29,8 @@ public interface IProductService {
     List<Product> getProductsByBrandAndName(String brand, String name);
 
     Long countProductsByBrandAndName(String brand, String name);
+
+    List<ProductDto> getConvertedProducts(List<Product> products);
+
+    ProductDto convertToDto(Product product);
 }
