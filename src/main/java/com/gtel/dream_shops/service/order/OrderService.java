@@ -2,6 +2,7 @@ package com.gtel.dream_shops.service.order;
 
 import com.gtel.dream_shops.dto.OrderDto;
 import com.gtel.dream_shops.enums.OrderStatus;
+import com.gtel.dream_shops.exceptions.ResourceNotFoundException;
 import com.gtel.dream_shops.model.Cart;
 import com.gtel.dream_shops.model.Order;
 import com.gtel.dream_shops.model.OrderItem;
@@ -71,8 +72,10 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order getOrder(Long orderId) {
-        return null;
+    public OrderDto getOrder(Long orderId) {
+        return orderRepository.findById(orderId)
+                .map(this :: convertToDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
     }
 
     @Override
