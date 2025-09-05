@@ -22,8 +22,14 @@ public class Order {
     private Long orderId;
     private LocalDate orderDate;
     private BigDecimal totalAmount;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderItem> orderItems = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
