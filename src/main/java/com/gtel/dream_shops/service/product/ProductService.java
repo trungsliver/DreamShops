@@ -2,6 +2,7 @@ package com.gtel.dream_shops.service.product;
 
 import com.gtel.dream_shops.dto.ImageDto;
 import com.gtel.dream_shops.dto.ProductDto;
+import com.gtel.dream_shops.exceptions.AlreadyExistsException;
 import com.gtel.dream_shops.exceptions.ResourceNotFoundException;
 import com.gtel.dream_shops.model.Category;
 import com.gtel.dream_shops.model.Image;
@@ -33,6 +34,10 @@ public class ProductService implements IProductService{
         // If exist, create new product
         // If not exist, create new category and then create new product
 
+        if (productExists(request.getName(), request.getBrand())){
+            throw new AlreadyExistsException(request.getBrand() +" "+request.getName()+ " already exists, you may update this product instead!");
+        }
+
         Category category = Optional.ofNullable(categoryRepoitory.findByName(request.getCategory().getName()))
                 .orElseGet(() -> {
                     Category newCategory = new Category(request.getCategory().getName());
@@ -40,6 +45,10 @@ public class ProductService implements IProductService{
                 });
         request.setCategory(category);
         return productRepository.save(createProduct(request, category));
+    }
+
+    private boolean productExists(String name , String brand) {
+        return productRepository.existsByNameAndBrand(name, brand);
     }
 
     private Product createProduct(AddProductRequest request, Category category) {

@@ -1,6 +1,7 @@
 package com.gtel.dream_shops.controller;
 
 import com.gtel.dream_shops.dto.ProductDto;
+import com.gtel.dream_shops.exceptions.AlreadyExistsException;
 import com.gtel.dream_shops.exceptions.ResourceNotFoundException;
 import com.gtel.dream_shops.model.Product;
 import com.gtel.dream_shops.request.AddProductRequest;
@@ -46,6 +47,9 @@ public class ProductController {
             Product theProduct = productService.addProduct(product);
             ProductDto productDto = productService.convertToDto(theProduct);
             return ResponseEntity.ok(new ApiResponse("Add product success!", productDto));
+        }catch (AlreadyExistsException e){
+            return  ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ApiResponse(e.getMessage(), null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), null));
