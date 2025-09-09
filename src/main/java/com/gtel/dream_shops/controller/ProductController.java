@@ -12,6 +12,7 @@ import com.gtel.dream_shops.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product) {
         try {
@@ -56,6 +58,7 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("product/update/{id}")
     public ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest product, @PathVariable Long id) {
         try {
@@ -68,6 +71,7 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("product/delete/{id}")
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
         try {
