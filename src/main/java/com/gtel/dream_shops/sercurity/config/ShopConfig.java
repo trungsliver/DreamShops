@@ -1,4 +1,4 @@
-package com.gtel.dream_shops.config;
+package com.gtel.dream_shops.sercurity.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
